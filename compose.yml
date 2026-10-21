@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: alumni
+      POSTGRES_USER: alumni
+      POSTGRES_PASSWORD: local-password
+    ports:
+      - "127.0.0.1:5434:5432"
+    volumes:
+      - simple-alumni-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U alumni -d alumni"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  app:
+    build: .
+    env_file: .env
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/alumni
+      DB_USER: alumni
+      DB_PASSWORD: local-password
+    ports:
+      - "8081:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  simple-alumni-data:

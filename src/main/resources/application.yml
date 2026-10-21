@@ -1,0 +1,21 @@
+server:
+  port: ${PORT:8080}
+  forward-headers-strategy: framework
+
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5434/alumni}
+    username: ${DB_USER:alumni}
+    password: ${DB_PASSWORD:local-password}
+
+phantom:
+  key: ${PHANTOM_API_KEY:}
+  agent: ${PHANTOM_AGENT_ID:}
+  argument: ${PHANTOM_QUERY_ARGUMENT:searchUrl}
+  result-pointer: ${PHANTOM_RESULT_POINTER:}
+  result-url-pointer: ${PHANTOM_RESULT_URL_POINTER:}
+  result-host: ${PHANTOM_RESULT_HOST:}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
